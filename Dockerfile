@@ -1,14 +1,15 @@
-# Sử dụng Tomcat 9 + JDK 17
+# Base image Tomcat
 FROM tomcat:9.0-jdk17
 
-# Xóa app mặc định
-RUN rm -rf /usr/local/tomcat/webapps/*
+# Copy PostgreSQL JDBC driver vào Tomcat lib
+ADD https://jdbc.postgresql.org/download/postgresql-42.7.8.jar /usr/local/tomcat/lib/
 
-# Copy file .war của bạn vào Tomcat, đổi tên thành ROOT.war để chạy ở "/"
-COPY dist/ch13_ex1_email /usr/local/tomcat/webapps/ROOT.war
+# Copy WAR vào Tomcat webapps
+COPY dist/ch13_ex1_email.war /usr/local/tomcat/webapps/
 
-# Mở port 8080
+# (Tùy chọn) Copy context.xml để override cấu hình DataSource
+COPY META-INF/context.xml /usr/local/tomcat/conf/context.xml
+
 EXPOSE 8080
 
-# Chạy Tomcat
 CMD ["catalina.sh", "run"]
