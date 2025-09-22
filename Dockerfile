@@ -8,7 +8,7 @@ ADD https://jdbc.postgresql.org/download/postgresql-42.7.8.jar /usr/local/tomcat
 COPY dist/ch13_ex1_email.war /usr/local/tomcat/webapps/
 
 # (Tùy chọn) Copy context.xml để override cấu hình DataSource
-COPY context.xml /usr/local/tomcat/conf/context.xml
+COPY web/META-INF/context.xml /usr/local/tomcat/conf/context.xml
 
 EXPOSE 8080
 
